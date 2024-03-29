@@ -12,6 +12,11 @@ import "izitoast/dist/css/iziToast.min.css";
 
 let timerInterval;
 let userSelectedDate;
+
+const startButton = document.querySelector("[data-start]");
+const input = document.querySelector("#datetime-picker");
+
+
 // Функція, яка перевіряє, чи є дата майбутньою
 function isFutureDate(date) {
     return date > new Date();
@@ -26,12 +31,15 @@ const flatpickrInput = flatpickr("#datetime-picker", {
     onClose: function (selectedDates) {
         userSelectedDate = selectedDates[0];
         if (isFutureDate(userSelectedDate)) {
-            document.querySelector("[data-start]").disabled = false;
+            startButton.disabled = false;
+            startButton.style.backgroundColor = "#4e75ff";
+            startButton.style.color = "#fff";
         } else {
-            document.querySelector("[data-start]").disabled = true;
+            startButton.disabled = true;
             iziToast.error({
                 title: "Error",
-                message: "Please choose a date in the future"
+                message: "Please choose a date in the future",
+                position: "topCenter"
             });
         }
     }
@@ -47,7 +55,7 @@ function updateTimer() {
     const difference = userSelectedDate.getTime() - new Date().getTime();
     if (difference <= 0) {
         clearInterval(timerInterval);
-        document.querySelector("[data-start]").disabled = false;
+        startButton.disabled = false;
         return;
     }
     const { days, hours, minutes, seconds } = convertMs(difference);
@@ -72,26 +80,11 @@ function convertMs(ms) {
     return { days, hours, minutes, seconds };
 };
 
-const startButton = document.querySelector("[data-start]");
-
-// Встановлюємо або знімаємо клас "disabled" в залежності від стану кнопки
-function toggleButtonState(disable) {
-  if (disable) {
-    startButton.classList.add("disabled");
-  } else {
-    startButton.classList.remove("disabled");
-  }
-}
-
-
-
-
 
 
 // Натискання на кнопку "Start"
-document.querySelector("[data-start]").addEventListener("click", function () {
-    this.disabled = true;
-    toggleButtonState(true); // Застосовуємо стилі для вимкненої кнопки
+startButton.addEventListener("click", function () {
+    startButton.disabled = true;
     flatpickrInput.close();// Закриття календаря після натискання кнопки
     timerInterval = setInterval(updateTimer, 1000);
     updateTimer();
@@ -100,20 +93,38 @@ document.querySelector("[data-start]").addEventListener("click", function () {
 });
 
 // Функція для вимкнення або увімкнення інпуту і кнопки
-function disableInputAndButton(disable) {
-    const input = document.querySelector("#datetime-picker");
-    const button = document.querySelector("[data-start]");
+function disableInputAndButton(disable) {  
     input.disabled = disable;
-    button.disabled = disable;
+    input.style.cursor = "default"
+    startButton.disabled = disable;
+    startButton.style.backgroundColor = "#cfcfcf";
+    startButton.style.color = "#989898";
+    startButton.style.cursor = "default";
+    if (disable) {
+        showReloadPageMessage();
+    }
 };
 
-// Перевірка на вибір нової дати
-flatpickrInput.calendarContainer.onclick = (function(event) {
-    if (timerInterval) {
-        iziToast.warning({
-            title: "Warning",
-            message: "Please reload the page to change the date."
-        });
-        event.preventDefault();
-    }
-});
+
+//Функція, яка буде відображати повідомлення через бібліотеку izitoast, коли кнопка та інпут стануть неактивними
+function showReloadPageMessage() {
+    iziToast.warning({
+        title: "Attention!",
+        message: " To choose new date please roload the page!",
+        position: "topCenter"
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+

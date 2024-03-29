@@ -17,12 +17,6 @@ input {
   margin-right: 8px;
 }
 
-input:hover {
-  border: 1px solid #000;
-}
-input:active {
-  border: 1px solid #4e75ff;
-}
 input:disabled {
   border: 1px solid #808080;
   background: #fafafa;
@@ -39,23 +33,20 @@ button {
   padding: 8px 16px;
   width: 75px;
   height: 40px;
-  background: #4e75ff;
+  color: #989898;
   border: none;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.04em;
-  color: #fff;
-}
-button:hover {
-  background: #6c8cff;
-  color: #fff;
+  background: #cfcfcf;
 }
 
-button.disabled {
+button:disabled {
   color: #989898;
   background: #cfcfcf;
+  cursor: default;
 }
 
 .timer {
@@ -84,4 +75,9 @@ button.disabled {
   line-height: 1.5;
   color: #2e2f42;
   text-transform: uppercase;
+}
+
+.iziToast-message {
+  width: 400px;
+  height: 100px;
 }
