@@ -17,6 +17,12 @@ const startButton = document.querySelector("[data-start]");
 const input = document.querySelector("#datetime-picker");
 
 
+
+// Заборонити кнопку Start при завантаженні сторінки
+document.addEventListener("DOMContentLoaded", function() {
+    startButton.disabled = true;
+});
+
 // Функція, яка перевіряє, чи є дата майбутньою
 function isFutureDate(date) {
     return date > new Date();
@@ -37,7 +43,7 @@ const flatpickrInput = flatpickr("#datetime-picker", {
         } else {
             startButton.disabled = true;
             iziToast.error({
-                title: "Error",
+                title: "Error!",
                 message: "Please choose a date in the future",
                 position: "topCenter"
             });
@@ -47,7 +53,7 @@ const flatpickrInput = flatpickr("#datetime-picker", {
  
 // Функція для форматування числа з доданням нулів
 function addLeadingZero(value) {
-    return value < 10 ? "0" + value : value;
+    return String(value).padStart(2, "0");
 };
 
 // Функція оновлення таймера
@@ -110,7 +116,7 @@ function disableInputAndButton(disable) {
 function showReloadPageMessage() {
     iziToast.warning({
         title: "Attention!",
-        message: " To choose new date please roload the page!",
+        message: " To choose new date please reload the page!",
         position: "topCenter"
     });
 };
