@@ -15,6 +15,7 @@ input {
   letter-spacing: 0.04em;
   color: #2e2f42;
   margin-right: 8px;
+  margin-bottom: 32px;
 }
 
 input:disabled {
@@ -78,6 +79,6 @@ button:disabled {
 }
 
 .iziToast-message {
-  width: 400px;
+  width: 300px;
   height: 100px;
 }

@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.form').addEventListener('submit', function(event) {
       event.preventDefault();
       
-      const delay = parseInt(this.querySelector('[name="delay"]').value);
-      const state = this.querySelector('[name="state"]:checked').value;
+      const delay = parseInt(this.querySelector('[name="delay"]').value); //Отримує значення з поля вводу затримки, а потім перетворює його у ціле число.
+      const state = this.querySelector('[name="state"]:checked').value; //Отримує значення, обране користувачем для радіокнопки "State"
       
       // Створення промісу
       createPromise(delay, state)
